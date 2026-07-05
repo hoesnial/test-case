@@ -15,7 +15,7 @@ export default function HeroCarousel() {
   const [startX, setStartX] = useState(0);
   const [dragDist, setDragDist] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const totalSlides = slides.length;
 
