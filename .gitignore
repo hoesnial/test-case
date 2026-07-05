@@ -1,0 +1,21 @@
+# Exclude from git
+open-design/
+DEPLOYMENT.md
+IMPLEMENTATION_STATUS.md
+doc/
+frontend/AGENTS.md
+frontend/CLAUDE.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
