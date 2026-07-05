@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: minishop-backend
+    runtime: docker
+    region: oregon
+    plan: free
+    rootDir: backend
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+
+databases:
+  - name: minishop-db
+    databaseName: minishop
+    plan: free
