@@ -13,9 +13,10 @@ fi
 echo "Waiting for database connection..."
 max_attempts=30
 attempt=0
-until php artisan db:show >/dev/null 2>&1 || [ $attempt -eq $max_attempts ]; do
+until php artisan db:show 2>&1 || [ $attempt -eq $max_attempts ]; do
     attempt=$((attempt + 1))
-    echo "Database not ready yet (attempt $attempt/$max_attempts)..."
+    echo "Database not ready (attempt $attempt/$max_attempts). Last error:"
+    php artisan db:show 2>&1 | tail -3
     sleep 2
 done
 
