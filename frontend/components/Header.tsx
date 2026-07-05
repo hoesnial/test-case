@@ -13,23 +13,24 @@ export const Header = ({ hideSearch = false }: HeaderProps) => {
   const { getItemCount } = useCart();
   const { user, isAuthenticated, signOut } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const cartCount = getItemCount();
 
   return (
     <nav className="sticky top-0 z-[100] bg-white border-b border-gray-200">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8 h-[60px] flex items-center gap-4">
+      <div className="max-w-[1600px] mx-auto px-3 md:px-6 lg:px-8 h-[60px] flex items-center gap-2 md:gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-extrabold text-xl text-gray-900 whitespace-nowrap flex-shrink-0">
           <span className="w-7 h-7 bg-emerald-600 rounded-md flex items-center justify-center text-white text-[15px]">
             M
           </span>
-          MiniShop
+          <span className="hidden sm:inline">MiniShop</span>
         </Link>
 
-        {/* Search Bar */}
+        {/* Search Bar - hidden on mobile, adjusted on tablet */}
         {!hideSearch && (
-          <div className="flex-1 min-w-[200px] flex items-center border-2 border-emerald-600 rounded-md overflow-hidden">
+          <div className="hidden md:flex flex-1 min-w-[200px] items-center border-2 border-emerald-600 rounded-md overflow-hidden">
             <select className="border-none px-2.5 text-[13px] bg-white text-slate-600 h-10 outline-none border-r border-gray-200 cursor-pointer w-[100px]">
               <option>Semua</option>
               <option>Elektronik</option>
@@ -52,15 +53,33 @@ export const Header = ({ hideSearch = false }: HeaderProps) => {
           </div>
         )}
 
+        {/* Mobile Search - show on mobile/tablet when not hidden */}
+        {!hideSearch && (
+          <div className="md:hidden flex-1 flex items-center border-2 border-emerald-600 rounded-md overflow-hidden">
+            <input
+              type="search"
+              placeholder="Cari..."
+              aria-label="Search"
+              className="flex-1 border-none px-3 text-[12px] h-9 outline-none"
+            />
+            <button className="w-9 h-9 bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </div>
+        )}
+
         {/* Spacer - push actions to right when search is hidden */}
-        {hideSearch && <div className="flex-1" />}
+        {hideSearch && <div className="flex-1 hidden md:block" />}
 
         {/* Actions */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
           {!isAuthenticated ? (
             <Link
               href="/signin"
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-gray-200 bg-white text-gray-900 text-[13px] font-medium whitespace-nowrap transition-all duration-150 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.97]"
+              className="hidden md:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-gray-200 bg-white text-gray-900 text-[13px] font-medium whitespace-nowrap transition-all duration-150 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.97]"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -69,7 +88,7 @@ export const Header = ({ hideSearch = false }: HeaderProps) => {
               <span>Sign In Account</span>
             </Link>
           ) : (
-            <div className="relative">
+            <div className="relative hidden md:block">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-gray-200 bg-white text-gray-900 text-[13px] font-medium whitespace-nowrap transition-all duration-150 hover:bg-gray-50 hover:border-gray-300"
@@ -106,7 +125,7 @@ export const Header = ({ hideSearch = false }: HeaderProps) => {
             </div>
           )}
 
-          <Link href="/cart" className="relative text-slate-600 hover:text-emerald-600 transition-colors duration-150">
+          <Link href="/cart" className="relative text-slate-600 hover:text-emerald-600 transition-colors duration-150 p-1 md:p-0">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
               <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -118,6 +137,19 @@ export const Header = ({ hideSearch = false }: HeaderProps) => {
               </span>
             )}
           </Link>
+
+          {/* Hamburger Menu Button - show on mobile/tablet */}
+          <button
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <div className="w-6 h-5 flex flex-col justify-between">
+              <span className={`h-0.5 bg-gray-900 transition-all duration-300 ${showMobileMenu ? 'rotate-45 translate-y-2' : ''}`}></span>
+              <span className={`h-0.5 bg-gray-900 transition-all duration-300 ${showMobileMenu ? 'opacity-0' : ''}`}></span>
+              <span className={`h-0.5 bg-gray-900 transition-all duration-300 ${showMobileMenu ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            </div>
+          </button>
         </div>
       </div>
     </nav>
