@@ -375,12 +375,18 @@ cd frontend
 vercel deploy --prod
 ```
 
-### Backend (Railway)
-1. Create new project on [Railway](https://railway.app)
+### Backend (Render)
+1. Create new project on [Render](https://render.com)
 2. Add PostgreSQL database
 3. Connect GitHub repository
 4. Set environment variables from `backend/.env.example`
 5. Deploy
+
+### Admin Access
+```
+Email: admin@minishop.com
+Password: admin123
+```
 
 ## License
 
