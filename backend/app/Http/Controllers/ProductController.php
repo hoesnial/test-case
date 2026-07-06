@@ -21,6 +21,9 @@ class ProductController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
+        // Order by most recently updated first
+        $query->orderBy('updated_at', 'desc');
+
         // Pagination
         $page = $request->input('page', 1);
         $limit = $request->input('limit', 12);
